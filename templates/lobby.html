@@ -1,0 +1,187 @@
+<!--
+    Cinnamon Fresh
+    Tic-Tac-Tournament
+    lobby.html
+    -----------------------------------------------------------------------
+    Main landing page for the website. Holds the game lobbies, allows the creation
+    and joining of them and allows messaging
+    -----------------------------------------------------------------------
+    Sources:
+        1.  https://github.com/samhita-alla/flask-chat-app-article
+        2.  https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
+        3.  https://stackoverflow.com/questions/13249168/get-element-by-classname-script-not-working
+        4.  https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
+        5.  https://stackoverflow.com/questions/7035842/how-to-change-the-buttons-text-using-javascript
+        6.  https://www.tutorialspoint.com/python/python_dictionary.htm
+        7.  https://api.jquery.com/val/
+        8.  https://www.w3schools.com/tags/tag_input.asp
+        9.  https://www.w3schools.com/tags/tag_button.asp
+        10. https://www.w3schools.com/tags/att_button_formaction.asp
+        11. https://api.jquery.com/submit/
+        12. https://stackoverflow.com/questions/32875824/socket-io-how-to-replace-event-listener-on-client
+        13. https://stackoverflow.com/questions/20013336/socket-io-how-to-use-listeners
+        14. https://socket.io/docs/server-api/
+        15. https://socket.io/docs/
+        16. https://www.w3schools.com/html/html_formatting.asp
+        17. https://www.w3schools.com/jquery/jquery_selectors.asp
+        18. https://api.jquery.com/text/
+    -----------------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+        <title>Tic-Tac-Tournament</title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="../static/css/test.css">
+        <!-- Holds the text when there's no lobbies yet -->
+        <h3 style='color: #ccc;font-size: 30px;'>No lobbies yet...</h3>
+        <!-- The new lobby button -->
+        <button type="button" class="newlobby" onclick="newLobbyClick()">New Lobby</button><br>
+        <!-- Where the lobby buttons are held when they're created -->
+        <div class="lobby_holder"></div>
+        <!-- A message that should be deleted if there are no issues loading the page -->
+        <h4 style='color: #ccc;font-size: 30px;'>If this message is still here after entering your name, please reload the page.</h4>
+        <!-- The message form for the user -->
+        <form action="" method="POST">
+            <div style="display: inline" class="username"></div>
+            <input type="text" class="message" placeholder="Message"/>
+            <input type="submit"/>
+        </form>
+        <br><hr>
+        <!-- Where we print out the messages -->
+        <div class="message_holder"></div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript">
+            // Initialize and handle the socketio connection
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            var clientList = [];
+
+            // Default socketio event that's called whenever a user connects
+            socket.on( 'connect', function() {
+                clientList.push(socket);
+                // Set some initial variables
+                var id = socket.io.engine.id;
+                // Get the username through the prompt
+                var user_name = changeName(id);
+
+                // Emit the intial message for a client connecting
+                socket.emit( 'clientConnectMsg', id)
+                // The username and message box
+                $( 'div.username' ).html('<div style="display: inline">'+user_name+':&nbsp</div>')
+                $( 'input.message' ).val( '' ).focus()
+                // The form we submit for sending messages between users
+                var form = $( 'form' ).on( 'submit', function( e ) {
+                    e.preventDefault()
+                    let user_input = $( 'input.message' ).val()
+                    // Send the message to main.py
+                    socket.emit( 'send global message', {
+                        user_name : user_name,
+                        message : user_input
+                    } )
+                    // Refocus the user's cursor on the message box so they don't have to click in it to
+                    // type out another message
+                    $( 'input.message' ).val( '' ).focus()
+                } )
+            } )
+
+            // socketio event for (re-)printing out the list of lobbies
+            // Takes a json holding the list of lobbies, their game ids, and their creators
+            socket.on( 'print lobby', function( json ) {
+                // Remove the no lobbies header
+                $( 'h3' ).remove()
+                // Clear the lobby holder div so we can just reprint all of them in case they've been updated
+                $( 'div.lobby_holder' ).html('')
+                // Loop through the lobbies
+                for (i=0; i<json.lobbies.length; i++) {
+                    // Append to the lobby holder all of the lobbies with their game ids and creator
+                    $( 'div.lobby_holder' ).append('<div><b style="color: red">Game: '+json.lobbies[i]["game_id"]+ '</b>&nbsp<button type="button" class="joinlobby" onclick="joinLobbyClick( '+json.lobbies[i]["game_id"]+' )">Join '+json.lobbies[i]["creator"]+'&#39;s Lobby</button><br></div>')
+                }
+            })
+
+            // socketio event for when a user clicks on create lobby so that they're automatically redirected into that game
+            socket.on('auto join', function(json) {
+                // Redirect that user into the game they made
+                window.location.href = '/index3/'+json.game_id
+            })
+
+            // Function for when a user clicks on the new lobby button
+            function newLobbyClick() {
+                // Emit that event to main.py
+                socket.emit('new lobby');
+            }
+
+            // Function for when a user clicks on the join lobby button
+            function joinLobbyClick(game_id) {
+                // Emit to main.py that we want to join this game_id's lobby
+                socket.emit('join lobby', game_id)
+                // Redirect that user into the game they're trying to join
+                window.location.href = '/index3/'+game_id
+            }
+
+            // Fucntion for printing out a server message
+            // Takes a message json holding the user name and the message
+            function serverMessage( msg ) {
+                // If the user name has been defined...
+                if( typeof msg.user_name !== 'undefined' ) {
+                    // Remove the error header
+                    $( 'h4' ).remove()
+                    // Prepend the message
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: blue">'+msg.user_name+': </b> '+msg.message+'<hr></div>' )
+                }
+                // If for some reason the user name hasn't been defined...
+                else {
+                    // Enter it manually as Server
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: blue">Server: </b> '+msg.user_name+'<hr></div>' )
+                }
+            }
+
+            // Function that's called at the start of loading the page that allows the user too set their name
+            // Takes their socket id
+            function changeName(socket_id) {
+                var txt = "Please enter your name:";
+                var name;
+                // Infinite loop until they enter a valid name
+                while(true) {
+                    // Bring up a prompt at the top of the page
+                    name = prompt(txt, "");
+                    // Check if the name is invalid
+                    if (name == null || name == "" || name.length > 16) {
+                        txt = "Invalid Name";
+                        continue;
+                    }
+                    else {
+                        // If it is valid, then emit it to the set name connector in main.py
+                        socket.emit('set name', socket_id, name);
+                        break;
+                    }
+                }
+                // Reset the text for the next user
+                txt = "Please enter your name:"
+                return name;
+            }
+
+            // socketio event for printing a message between users on this page
+            // Takes a message json
+            socket.on( 'my global response', function( msg ) {
+                // As long as the user name has been defined...
+                if( typeof msg.user_name !== 'undefined' ) {
+                    // Remove the error header
+                    $( 'h3' ).remove()
+                    // Prepend the message into the message holder div
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: #000">'+msg.user_name+': </b> '+msg.message+'<hr></div>' )
+                }
+            })
+
+            // socketio event for the server sending a message
+            // Takes a message json
+            socket.on( 'game server response', function( msg ) {
+                // Call the serverMessage function
+                serverMessage(msg);
+            })
+        </script>
+    </body>
+</html>

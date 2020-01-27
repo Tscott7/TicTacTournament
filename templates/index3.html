@@ -1,0 +1,456 @@
+<!--
+    Cinnamon Fresh
+    Tic-Tac-Tournament
+    index2.html
+    -----------------------------------------------------------------------
+    Main landing page for the website. Responsible for handling one game
+    of Ultimate Tic-Tac-Toe between two users.
+    -----------------------------------------------------------------------
+    Sources:
+        1.  https://github.com/samhita-alla/flask-chat-app-article
+        2.  https://stackoverflow.com/questions/17287330/socket-io-handling-disconnect-event
+        3.  https://stackoverflow.com/questions/13249168/get-element-by-classname-script-not-working
+        4.  https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
+        5.  https://stackoverflow.com/questions/7035842/how-to-change-the-buttons-text-using-javascript
+        6.  https://www.tutorialspoint.com/python/python_dictionary.htm
+        7.  https://api.jquery.com/val/
+        8.  https://www.w3schools.com/tags/tag_input.asp
+        9.  https://www.w3schools.com/tags/tag_button.asp
+        10. https://www.w3schools.com/tags/att_button_formaction.asp
+        11. https://api.jquery.com/submit/
+        12. https://stackoverflow.com/questions/32875824/socket-io-how-to-replace-event-listener-on-client
+        13. https://stackoverflow.com/questions/20013336/socket-io-how-to-use-listeners
+        14. https://socket.io/docs/server-api/
+        15. https://socket.io/docs/
+        16. https://www.w3schools.com/html/html_formatting.asp
+        17. https://www.w3schools.com/jquery/jquery_selectors.asp
+        18. https://api.jquery.com/text/
+        19.	https://stackoverflow.com/questions/51046786/flask-redirect-url-is-not-redirecting-to-home-page-after-login
+        20.	https://codeburst.io/jinja-2-explained-in-5-minutes-88548486834e
+        21.	https://www.pythonanywhere.com/forums/topic/4366/
+        22.	https://developer.mozilla.org/en-US/docs/Web/API/Document/domain
+        23.	https://www.tutorialrepublic.com/faq/how-to-get-the-current-url-with-javascript.php
+        24.	https://www.w3schools.com/jsref/jsref_slice_string.asp
+        25.	https://www.w3schools.com/jsref/jsref_charat.asp
+        26.	https://socket.io/docs/client-api/
+        27.	https://stackoverflow.com/questions/19150220/creating-rooms-in-socket-io
+        28.	https://stackoverflow.com/questions/15909821/socket-io-join-leave
+        29.	https://stackoverflow.com/questions/37896697/flask-app-with-jinja-rendering-does-not-auto-refresh-webpage
+        30.	https://stackoverflow.com/questions/1827659/get-a-div-value-in-jquery
+        31.	https://api.jquery.com/html/#html
+        32.	https://stackoverflow.com/questions/4790360/no-newline-after-div
+        33.	https://www.w3schools.com/js/js_popup.asp
+    -----------------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+        <title>Tic-Tac-Tournament</title>
+    </head>
+    <body>
+        <link rel="stylesheet" href="../static/css/test.css">
+		<!-- The main game board. Each button has a class with increasing number that when clicked, sends it to the button
+		click function with the class number -->
+        <table class="main table">
+            <tr class="main rows">
+                <td class="table0">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="00" onclick="buttonClick(00)"></button></td>
+                            <td class="vert"><button class="01" onclick="buttonClick(01)"></button></td>
+                            <td><button class="02" onclick="buttonClick(02)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="03" onclick="buttonClick(03)"></button></td>
+                            <td class="vert hori"><button class="04" onclick="buttonClick(04)"></button></td>
+                            <td class="hori"><button class="05" onclick="buttonClick(05)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="06" onclick="buttonClick(06)"></button></td>
+                            <td class="vert"><button class="07" onclick="buttonClick(07)"></button></td>
+                            <td><button class="08" onclick="buttonClick(08)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table1">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="10" onclick="buttonClick(10)"></button></td>
+                            <td class="vert"><button class="11" onclick="buttonClick(11)"></button></td>
+                            <td><button class="12" onclick="buttonClick(12)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="13" onclick="buttonClick(13)"></button></td>
+                            <td class="vert hori"><button class="14" onclick="buttonClick(14)"></button></td>
+                            <td class="hori"><button class="15" onclick="buttonClick(15)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="16" onclick="buttonClick(16)"></button></td>
+                            <td class="vert"><button class="17" onclick="buttonClick(17)"></button></td>
+                            <td><button class="18" onclick="buttonClick(18)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table2">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="20" onclick="buttonClick(20)"></button></td>
+                            <td class="vert"><button class="21" onclick="buttonClick(21)"></button></td>
+                            <td><button class="22" onclick="buttonClick(22)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="23" onclick="buttonClick(23)"></button></td>
+                            <td class="vert hori"><button class="24" onclick="buttonClick(24)"></button></td>
+                            <td class="hori"><button class="25" onclick="buttonClick(25)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="26" onclick="buttonClick(26)"></button></td>
+                            <td class="vert"><button class="27" onclick="buttonClick(27)"></button></td>
+                            <td><button class="28" onclick="buttonClick(28)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="main rows">
+                <td class="table3">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="30" onclick="buttonClick(30)"></button></td>
+                            <td class="vert"><button class="31" onclick="buttonClick(31)"></button></td>
+                            <td><button class="32" onclick="buttonClick(32)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="33" onclick="buttonClick(33)"></button></td>
+                            <td class="vert hori"><button class="34" onclick="buttonClick(34)"></button></td>
+                            <td class="hori"><button class="35" onclick="buttonClick(35)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="36" onclick="buttonClick(36)"></button></td>
+                            <td class="vert"><button class="37" onclick="buttonClick(37)"></button></td>
+                            <td><button class="38" onclick="buttonClick(38)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table4">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="40" onclick="buttonClick(40)"></button></td>
+                            <td class="vert"><button class="41" onclick="buttonClick(41)"></button></td>
+                            <td><button class="42" onclick="buttonClick(42)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="43" onclick="buttonClick(43)"></button></td>
+                            <td class="vert hori"><button class="44" onclick="buttonClick(44)"></button></td>
+                            <td class="hori"><button class="45" onclick="buttonClick(45)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="46" onclick="buttonClick(46)"></button></td>
+                            <td class="vert"><button class="47" onclick="buttonClick(47)"></button></td>
+                            <td><button class="48" onclick="buttonClick(48)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table5">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="50" onclick="buttonClick(50)"></button></td>
+                            <td class="vert"><button class="51" onclick="buttonClick(51)"></button></td>
+                            <td><button class="52" onclick="buttonClick(52)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="53" onclick="buttonClick(53)"></button></td>
+                            <td class="vert hori"><button class="54" onclick="buttonClick(54)"></button></td>
+                            <td class="hori"><button class="55" onclick="buttonClick(55)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="56" onclick="buttonClick(56)"></button></td>
+                            <td class="vert"><button class="57" onclick="buttonClick(57)"></button></td>
+                            <td><button class="58" onclick="buttonClick(58)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="main rows">
+                <td class="table6">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="60" onclick="buttonClick(60)"></button></td>
+                            <td class="vert"><button class="61" onclick="buttonClick(61)"></button></td>
+                            <td><button class="62" onclick="buttonClick(62)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="63" onclick="buttonClick(63)"></button></td>
+                            <td class="vert hori"><button class="64" onclick="buttonClick(64)"></button></td>
+                            <td class="hori"><button class="65" onclick="buttonClick(65)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="66" onclick="buttonClick(66)"></button></td>
+                            <td class="vert"><button class="67" onclick="buttonClick(67)"></button></td>
+                            <td><button class="68" onclick="buttonClick(68)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table7">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="70" onclick="buttonClick(70)"></button></td>
+                            <td class="vert"><button class="71" onclick="buttonClick(71)"></button></td>
+                            <td><button class="72" onclick="buttonClick(72)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="73" onclick="buttonClick(73)"></button></td>
+                            <td class="vert hori"><button class="74" onclick="buttonClick(74)"></button></td>
+                            <td class="hori"><button class="75" onclick="buttonClick(75)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="76" onclick="buttonClick(76)"></button></td>
+                            <td class="vert"><button class="77" onclick="buttonClick(77)"></button></td>
+                            <td><button class="78" onclick="buttonClick(78)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="table8">
+                    <table class="inner table">
+                        <tr>
+                            <td><button class="80" onclick="buttonClick(80)"></button></td>
+                            <td class="vert"><button class="81" onclick="buttonClick(81)"></button></td>
+                            <td><button class="82" onclick="buttonClick(82)"></button></td>
+                        </tr>
+                        <tr>
+                            <td class="hori"><button class="83" onclick="buttonClick(83)"></button></td>
+                            <td class="vert hori"><button class="84" onclick="buttonClick(84)"></button></td>
+                            <td class="hori"><button class="85" onclick="buttonClick(85)"></button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="86" onclick="buttonClick(86)"></button></td>
+                            <td class="vert"><button class="87" onclick="buttonClick(87)"></button></td>
+                            <td><button class="88" onclick="buttonClick(88)"></button></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <!-- The div where the turn info is held -->
+        <div style="text-align: center" class="turn_holder"></div><br>
+        <!-- The reset game button -->
+        <button type="button" class="resetgame" onclick="resetGameClick()">Reset Game</button><br>
+        <!-- The message that will be deleted if there are no errors in loading the page for someone -->
+        <h3 style='color: #ccc;font-size: 30px;'>If this message is still here after five seconds, please return to the main page and create a new lobby.</h3>
+        <!-- The message form -->
+        <form action="" method="POST">
+            <div style="display: inline" class="username"></div>
+            <input type="text" class="message" placeholder="Messages"/>
+            <input type="submit"/>
+        </form>
+        <br><hr>
+        <!-- The div where the messages are held and added into -->
+        <div class="message_holder"></div>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        <script type="text/javascript">
+        	// Initialize socketio and get initial variables
+            var socket = io.connect('http://' + document.domain + ':' + location.port);
+            var clientList = [];
+            // The url of the page
+            var url = (window.location.href).toString()
+            // The game_id which we get from the url because it's at the end
+            var game_id = url.slice(url.length-6, url.length)
+      
+      		// socketio default event that's called automatically when a user connects.
+            socket.on( 'connect', function() {
+                clientList.push(socket);
+                var id = socket.io.engine.id;
+                // Get the username from the database by going into main.py
+                socket.emit( 'get username', game_id, id );
+                // Give a small delay before calling these so we make sure we get the name
+                // before trying to start the game or generate the connect message.
+                setTimeout(function (){
+	                socket.emit( 'g_clientConnectMsg', game_id, id );
+	                socket.emit( 'g_clientConnectStart', game_id, id );
+				}, 500);
+                
+            } )
+
+            // socketio event for changing the user's name.
+            socket.on( 'change name', function(json) {
+            	// Emit to main.py so that it can finish setting the user's game name
+            	socket.emit('set game name', json._id, json.user_name, game_id);
+            	// The name and message box
+                $( 'div.username' ).html('<div style="display: inline">'+json.user_name+':&nbsp</div>')
+                $( 'input.message' ).val( '' ).focus()
+                // The form we submit for sending messages
+                var form = $( 'form' ).on( 'submit', function( e ) {
+                    e.preventDefault()
+                    let user_input = $( 'input.message' ).val()
+                    // Send the game message to main.py
+                    socket.emit( 'send game message', {
+                        user_name : json.user_name,
+                        message : user_input
+                    }, game_id )
+                    // Refocus the page on the message box so the user doesn't have to reclick in
+                    // the box to send another message.
+                    $( 'input.message' ).val( '' ).focus()
+                } )
+            })
+
+            // This is called whenever a button is clicked on the game board. It gets sent the button id
+            // so we know which specific button was clicked.
+            function buttonClick(this_id) {
+            	// Send the button id and the socket id to the serve so it can validate if it's a valid move.
+                socket.emit('value', {
+                    this_id : this_id,
+                    socket_id : socket.io.engine.id
+                }, game_id);
+            }
+
+            // Is called when someone presses the reset game button
+            function resetGameClick() {
+            	// Sends the event to main.py so the game can be reset.
+            	socket.emit('reset game', game_id);
+            }
+
+            // Handles printing out a server message
+            function serverMessage( msg ) {
+            	// If the username is defined... (It should always be defined, but we're just making sure)
+            	if( typeof msg.user_name !== 'undefined' ) {
+                    $( 'h3' ).remove()
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: blue">'+msg.user_name+': </b> '+msg.message+'<hr></div>' )
+                }
+                else {
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: blue">Server: </b> '+msg.user_name+'<hr></div>' )
+                }
+            }
+
+            // socketio event to complete the move on the html side.
+            socket.on('valid move', function(json){
+            	// Set all of the individual boards to a blank background color.
+                document.getElementsByClassName("table0")[0].style.backgroundColor=""
+                document.getElementsByClassName("table1")[0].style.backgroundColor=""
+                document.getElementsByClassName("table2")[0].style.backgroundColor=""
+                document.getElementsByClassName("table3")[0].style.backgroundColor=""
+                document.getElementsByClassName("table4")[0].style.backgroundColor=""
+                document.getElementsByClassName("table5")[0].style.backgroundColor=""
+                document.getElementsByClassName("table6")[0].style.backgroundColor=""
+                document.getElementsByClassName("table7")[0].style.backgroundColor=""
+                document.getElementsByClassName("table8")[0].style.backgroundColor=""
+
+                var str;
+                var elm;
+                // Loop through all of the moves which are valid moves for the next player
+                for (i=0; i< json.moves.length; i++){
+                	// Make the class name string of a valid future move
+                    str = "table".concat(json.moves[i].toString())
+                    // Get the valid future board
+                    elm = document.getElementsByClassName(str)[0]
+                    // Set its background color to yellow
+                    elm.style.backgroundColor = "yellow";
+                }
+
+                var index = json.index;
+                var space = json.space;
+                var space_str = space;
+                var index_str;
+                // Make sure the button id clicked is the proper format, ie a string and with a leading 0
+                if (space_str != null) {
+                    space_str = space_str.toString();
+                    index_str = index.toString();
+                }
+                var position = index_str+space_str;
+                // Get the button class so we can change it to X or O
+                var x = document.getElementsByClassName(position)[0];
+                // If we got the button
+                if (x != null) {
+                	// If the player's turn was player 1...
+                    if (json.player == 1){
+                    	// Set the button text
+                        x.innerHTML = "X"
+                        // Change the turn holder so it shows that it's the right person's turn
+                        $( 'div.turn_holder' ).html('X:&nbsp'+json.other_username+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color: blue">O:&nbsp;'+json.username+'</b>')
+                    }
+                    // Otherwise, do the same thing but for player 2
+                    else {
+                        x.innerHTML = "O"
+                        $( 'div.turn_holder' ).html('<b style="color: blue">X:&nbsp;'+json.username+'</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O:&nbsp;'+json.other_username)
+                    }
+                }
+                // If we got a bad button class for some reason set everything back to normal because we don't
+                // have any information to fix anything
+                else {
+                	if (json.player == 1){
+                        $( 'div.turn_holder' ).html('X:&nbsp'+json.username+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style="color: blue">O:&nbsp;'+json.other_username+'</b>')
+                    }
+                    else {
+                        $( 'div.turn_holder' ).html('<b style="color: blue">X:&nbsp;'+json.username+'</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;O:&nbsp;'+json.other_username)
+                    }
+                }
+            })
+
+            // socketio event for the game server sending a message
+            socket.on( 'game server response', function( msg ) {
+            	// Send the message to the serverMessage function
+                serverMessage(msg);
+            })
+
+            // socketio event for a client's message
+            socket.on( 'my response', function( msg ) {
+            	// Only create the message if there's a username attached to it
+                if( typeof msg.user_name !== 'undefined' ) {
+                	// Remove the h3 if it is still there so we know we don't have an error
+                    $( 'h3' ).remove()
+                    // Prepend to the message holder so the messages flow from top to bottom
+                    $( 'div.message_holder' ).prepend( '<div><b style="color: #000">'+msg.user_name+': </b> '+msg.message+'<hr></div>' )
+                }
+            })
+
+            // socketio event for clearing the board, this is called after reset board is pressed.
+            socket.on( 'clear board', function( e ) {
+
+            	// Get all of the individual boards and set their background colors to yellow
+                document.getElementsByClassName("table0")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table1")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table2")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table3")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table4")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table5")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table6")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table7")[0].style.backgroundColor="yellow"
+                document.getElementsByClassName("table8")[0].style.backgroundColor="yellow"
+
+            	var i;
+            	// Loop through all the buttons and reset all of the text on them
+            	for (i=0; i<89; i++) {
+                    if (i<10) {
+                    	// Must prepend a 0 if it's a single digit number
+                        i = "0" + i.toString();
+                    } else {
+                        i = i.toString();
+                    }
+            		var x = document.getElementsByClassName(i)[0];
+                	if (x != null) {
+                		x.innerHTML = ""
+                	}
+                	// Change the turn holder to just say game restarted
+                	$( 'div.turn_holder' ).html("Game restarted")
+            	}
+            	// Send a message to say that the game has been reset.
+            	serverMessage( {
+            		"user_name" : "Server",
+            		"message" : "A new game has begun!"
+            	} )
+            } )
+
+        </script>
+        <br><br>
+        <!-- The game rules at the bottom of the page -->
+        <h2>Rules</h2>
+        <p>Each small 3-by-3 tic-tac-toe board is referred to as a local board, and the larger 3-by-3 board is referred to as the global board.</p>
+        <p>The game starts with X playing wherever they want in any of the 81 empty spots. This move 'sends' their opponent to its relative location. For example, if X played in the top right square of their local board, then O needs to play next in the local board at the top right of the global board. O can then play in any one of the nine available spots in that local board, each move sending X to a different local board.</p>
+        <p>If a move is played so that it is to win a local board by the rules of normal tic-tac-toe, then the entire local board is marked as a victory for the player in the global board.</p>
+        <p>Once a local board is won by a player or it is filled completely, no more moves may be played in that board. If a player is sent to such a board, then that player may play in any other board.</p>
+        <p>Game play ends when either a player wins the global board or there are no legal moves remaining, in which case the game is a draw.</p>
+    </body>
+</html>
